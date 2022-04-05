@@ -1,3 +1,4 @@
+SetMouseDelay -1
 SetDefaultMouseSpeed, 0
 Loop
 {
