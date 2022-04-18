@@ -124,43 +124,42 @@ def clicky(x, y):
     pyautogui.click(x, y)
         
 def main_splasher():
+    
+    global count
+    print("Starting thread 1...")
     while not quitProcess:
-        global count
-        print("Starting thread 1...")
-        while True:
-            for i in range (1,11):
-                try: #ToDo: Clean up and call from function
-                    window = win.getWindowsWithTitle('RuneLite')[0]
-                except:
-                    print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
-                    raise SystemExit
-                rand = randrange(100,700) 
-                minutes = rand//60
-                print(f"Thread 1 sleeping for: {rand}s, ({minutes}m)")
-                window_activate(rand)
-                count+=1
-                print(f"Thread 1 says: Keystrokes: {count} Screen clear in: {i}/10")
-            screen_scrub()
+        for i in range (1,11):
+            try: #ToDo: Clean up and call from function
+                window = win.getWindowsWithTitle('RuneLite')[0]
+            except:
+                print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
+                raise SystemExit
+            rand = randrange(100,700) 
+            minutes = rand//60
+            print(f"Thread 1 sleeping for: {rand}s, ({minutes}m)")
+            window_activate(rand)
+            count+=1
+            print(f"Thread 1 says: Keystrokes: {count} Screen clear in: {i}/10")
+        screen_scrub()
         
 def sub_splasher():
-    while not quitProcess:
-        global count
-        print("Starting thread 2...")
-        while True:
-            for i in range (1,11):
-                try:
-                    window = win.getWindowsWithTitle('RuneLite')[0]
-                except:
-                    print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
-                    raise SystemExit
+   global count
+   print("Starting thread 2...")
+   while not quitProcess:
+       for i in range (1,11):
+            try:
+                window = win.getWindowsWithTitle('RuneLite')[0]
+            except:
+                print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
+                raise SystemExit
                 
-                rand = randrange(200,500)
-                minutes = rand//60
-                print(f"Thread 2 sleeping for: {rand}s, ({minutes}m)")
-                window_activate(rand)
-                count+=1
-                print(f"Thread 2 says: Keystrokes: {count} Screen clear in: {i}/10")
-            screen_scrub()
+            rand = randrange(200,500)
+            minutes = rand//60
+            print(f"Thread 2 sleeping for: {rand}s, ({minutes}m)")
+            window_activate(rand)
+            count+=1
+            print(f"Thread 2 says: Keystrokes: {count} Screen clear in: {i}/10")
+        screen_scrub()
 
 def window_activate(rand):
     try:
