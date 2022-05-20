@@ -11,8 +11,6 @@ Author:github.com/crinkies
 from pynput.keyboard import Key, Controller
 from random import randrange
 from ctypes import windll
-#BUG: pygetwindow sometimes crashes when out of focus
-#Run as admin to circumvent
 
 password = "password"
 press = Controller()
@@ -22,18 +20,15 @@ keys = ['a','b','c','d','e','1','2','3','4','5']
 quitProcess = False
 
 def main():
-    try:
         login()
         time.sleep(20)
         new_thread(main_splasher)
         new_thread(sub_splasher)
         new_thread(wiper)
-        new_thread(relog)
-        print("Successfully started with no errors.")
-    except:
-        print("Error while initiating.")
+        new_thread(log)
+ 
 
-def relog():
+def log():
     time1 = timer//60
     time2 = time1//60
     print(f"Relogging in {time1}m, {time2}h.")
