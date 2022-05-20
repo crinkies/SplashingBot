@@ -8,6 +8,7 @@ import os
 License:MIT
 Author:github.com/crinkies
 '''
+from pygetwindow import PyGetWindowException
 from pynput.keyboard import Key, Controller
 from random import randrange
 from ctypes import windll
@@ -52,7 +53,7 @@ def login():
             time.sleep(tall)
             clicky(x, y)
             print("Relogging...")
-        except:
+        except ImageNotFoundException:
             pass
         x, y = pyautogui.locateCenterOnScreen('data\pic1.png')
         time.sleep(tall)
@@ -74,9 +75,9 @@ def login():
         print("Logged in..,")
         block_off()
         for i in range(0,3):
-            os.startfile("data\External.ahk")# Using AHK here because pixelsearch and mouse speed
-            time.sleep(tall)                 # was WAY better than what I could achieve with Python.
-    except:
+            os.startfile("data\External.ahk")
+            time.sleep(tall)   
+    except PyGetWindowException:
         print("Error.")
         time.sleep(5)
         raise SystemExit
@@ -87,7 +88,6 @@ def wiper():
     while not quitProcess:
         rand = randrange(0,500)
         time.sleep(rand)
-        block_on()
         window = win.getWindowsWithTitle('RuneLite')[0]
         window.activate()
         window.restore()
@@ -95,18 +95,11 @@ def wiper():
         press.press(Key.backspace)
         time.sleep(.1)
         press.release(Key.backspace)
-        block_off()
     
 def new_thread(thread):
     x = threading.Thread(target=thread)
     x.start()
-    
-def block_on():
-    windll.user32.BlockInput(True)
-    
-def block_off():
-    windll.user32.BlockInput(False)
-    
+
 def screen_scrub():
     time.sleep(3)
     os.system('cls')
@@ -119,12 +112,11 @@ def clicky(x, y):
     pyautogui.click(x, y)
         
 def main_splasher():
-    
     global count
     print("Starting thread 1...")
     while not quitProcess:
         for i in range (1,11):
-            try: #ToDo: Clean up and call from function
+            try: 
                 window = win.getWindowsWithTitle('RuneLite')[0]
             except:
                 print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
@@ -144,7 +136,7 @@ def sub_splasher():
        for i in range (1,11):
             try:
                 window = win.getWindowsWithTitle('RuneLite')[0]
-            except:
+            except PyGetWindowException:
                 print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
                 raise SystemExit
                 
@@ -168,7 +160,7 @@ def window_activate(rand):
         time.sleep(.3)
         press.release(key)
         block_off()
-    except:
+    except PyGetWindowException:
         print("Error. Could not load window.")
         time.sleep(5)
         raise SystemExit
