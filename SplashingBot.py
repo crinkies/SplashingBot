@@ -13,6 +13,7 @@ from pynput.keyboard import Key, Controller
 from random import randrange
 from ctypes import windll
 
+color = (255, 183, 0)
 password = "password"
 press = Controller()
 count = 0
@@ -37,10 +38,10 @@ def log():
     global quitProcess
     quitProcess = True
     login()
+    time.sleep(15)
     quitProcess = False
     
 def login():
-    block_on()
     tall = random.uniform(1.1,2.1)
     grande = random.uniform(6.0,7.0)
     vente = random.uniform(10.0,12.0)
@@ -49,33 +50,41 @@ def login():
         window.activate()
         window.restore()
         try:
-            x, y = pyautogui.locateCenterOnScreen('data\pic6.png')
+            img = pyautogui.locateCenterOnScreen(r'data\pic6.png')
             time.sleep(tall)
             clicky(x, y)
             print("Relogging...")
-        except ImageNotFoundException:
+        except:
             pass
-        x, y = pyautogui.locateCenterOnScreen('data\pic1.png')
+        x, y = pyautogui.locateCenterOnScreen(r'data\pic1.png')
         time.sleep(tall)
         clicky(x, y)
-        x, y = pyautogui.locateCenterOnScreen('data\pic2.png')
+        x, y = pyautogui.locateCenterOnScreen(r'data\pic2.png')
         time.sleep(tall)
         clicky(x, y)
-        x, y = pyautogui.locateCenterOnScreen('data\pic3.png')
+        x, y = pyautogui.locateCenterOnScreen(r'data\pic3.png')
         time.sleep(tall)
         clicky(x, y)
         press.type(password)
         time.sleep(tall)
-        x, y = pyautogui.locateCenterOnScreen('data\pic4.png')
+        x, y = pyautogui.locateCenterOnScreen(r'data\pic4.png')
         clicky(x, y)
         time.sleep(vente)
-        x, y = pyautogui.locateCenterOnScreen('data\pic5.png')
+        x, y = pyautogui.locateCenterOnScreen(r'data\pic5.png')
         time.sleep(grande)
         clicky(x, y)
-        print("Logged in..,")
-        block_off()
-        for i in range(0,3):
-            os.startfile("data\External.ahk")
+        print("Logged in...")
+        for i in range(0,4):
+            #os.startfile("data\External.ahk")
+            ran = False
+            pyautogui.PAUSE = 0
+            s = pyautogui.screenshot()
+            for x in range(s.width):
+                for y in range(s.height):
+                    if s.getpixel((x, y)) == color and not ran:
+                        pyautogui.click(x, y)
+                        ran = True
+                        print(f"clicked {color}")
             time.sleep(tall)   
     except PyGetWindowException:
         print("Error.")
@@ -99,10 +108,6 @@ def wiper():
 def new_thread(thread):
     x = threading.Thread(target=thread)
     x.start()
-
-def screen_scrub():
-    time.sleep(3)
-    os.system('cls')
     
 def clicky(x, y):
     rand = randrange(0, 4)
@@ -126,8 +131,7 @@ def main_splasher():
             print(f"Thread 1 sleeping for: {rand}s, ({minutes}m)")
             window_activate(rand)
             count+=1
-            print(f"Thread 1 says: Keystrokes: {count} Screen clear in: {i}/10")
-        screen_scrub()
+            print(f"Thread 1: Keystrokes: {count}")
         
 def sub_splasher():
    global count
@@ -145,24 +149,22 @@ def sub_splasher():
             print(f"Thread 2 sleeping for: {rand}s, ({minutes}m)")
             window_activate(rand)
             count+=1
-            print(f"Thread 2 says: Keystrokes: {count} Screen clear in: {i}/10")
-        screen_scrub()
+            print(f"Thread 2: Keystrokes: {count}")
 
 def window_activate(rand):
     try:
         window = win.getWindowsWithTitle('RuneLite')[0]
         time.sleep(rand)
-        block_on()
         window.activate()
         window.restore()
         key = random.choice(keys)
         press.press(key)
         time.sleep(.3)
         press.release(key)
-        block_off()
     except PyGetWindowException:
         print("Error. Could not load window.")
         time.sleep(5)
         raise SystemExit
     
 main()
+
