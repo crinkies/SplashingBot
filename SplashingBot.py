@@ -74,17 +74,17 @@ def login():
         time.sleep(grande)
         clicky(x, y)
         print("Logged in...")
-        for i in range(0,4):
-            #os.startfile("data\External.ahk")
-            ran = False
-            pyautogui.PAUSE = 0
-            s = pyautogui.screenshot()
-            for x in range(s.width):
-                for y in range(s.height):
-                    if s.getpixel((x, y)) == color and not ran:
-                        pyautogui.click(x, y)
-                        ran = True
-                        print(f"clicked {color}")
+        for i in range(4):
+            os.startfile("data\External.ahk")
+#             ran = False
+#             pyautogui.PAUSE = 0
+#             s = pyautogui.screenshot()
+#             for x in range(s.width):
+#                 for y in range(s.height):
+#                     if s.getpixel((x, y)) == color and not ran:
+#                         pyautogui.click(x, y)
+#                         ran = True
+#                         print(f"clicked {color}")
             time.sleep(tall)   
     except PyGetWindowException:
         print("Error.")
