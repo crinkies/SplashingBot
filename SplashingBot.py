@@ -125,7 +125,7 @@ def main_splasher():
             for i in range (1,11):
                 try: 
                     window = win.getWindowsWithTitle('RuneLite')[0]
-                except:
+                except PyGetWindowException:
                     print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
                     raise SystemExit
                 rand = randrange(100,700) 
@@ -143,7 +143,7 @@ def sub_splasher():
             for i in range (1,11):
                 try:
                     window = win.getWindowsWithTitle('RuneLite')[0]
-                    except PyGetWindowException:
+                except PyGetWindowException:
                     print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
                     raise SystemExit
                 
@@ -170,3 +170,5 @@ def window_activate(rand):
         raise SystemExit
     
 main()
+
+
