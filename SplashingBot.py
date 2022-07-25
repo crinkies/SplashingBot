@@ -17,7 +17,7 @@ color = (255, 183, 0)
 password = "password"
 press = Controller()
 count = 0
-timer = 21700
+timer = 50
 keys = ['a','b','c','d','e','1','2','3','4','5']
 quitProcess = False
 
@@ -50,7 +50,7 @@ def login():
         window.activate()
         window.restore()
         try:
-            img = pyautogui.locateCenterOnScreen(r'data\pic6.png')
+            x, y = pyautogui.locateCenterOnScreen(r'data\pic6.png')
             time.sleep(tall)
             clicky(x, y)
             print("Relogging...")
@@ -94,16 +94,17 @@ def login():
     
 def wiper():
     print("Wiper started...")
-    while not quitProcess:
-        rand = randrange(0,500)
-        time.sleep(rand)
-        window = win.getWindowsWithTitle('RuneLite')[0]
-        window.activate()
-        window.restore()
-        print("Removing text...")
-        press.press(Key.backspace)
-        time.sleep(.1)
-        press.release(Key.backspace)
+    while True:
+        while not quitProcess:
+            rand = randrange(0,500)
+            time.sleep(rand)
+            window = win.getWindowsWithTitle('RuneLite')[0]
+            window.activate()
+            window.restore()
+            print("Removing text...")
+            press.press(Key.backspace)
+            time.sleep(.1)
+            press.release(Key.backspace)
     
 def new_thread(thread):
     x = threading.Thread(target=thread)
@@ -119,30 +120,32 @@ def clicky(x, y):
 def main_splasher():
     global count
     print("Starting thread 1...")
-    while not quitProcess:
-        for i in range (1,11):
-            try: 
-                window = win.getWindowsWithTitle('RuneLite')[0]
-            except:
-                print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
-                raise SystemExit
-            rand = randrange(100,700) 
-            minutes = rand//60
-            print(f"Thread 1 sleeping for: {rand}s, ({minutes}m)")
-            window_activate(rand)
-            count+=1
-            print(f"Thread 1: Keystrokes: {count}")
+    while True:
+        while not quitProcess:
+            for i in range (1,11):
+                try: 
+                    window = win.getWindowsWithTitle('RuneLite')[0]
+                except:
+                    print("\nThread 1 could not fetch window.\nExiting thread 1.\n")
+                    raise SystemExit
+                rand = randrange(100,700) 
+                minutes = rand//60
+                print(f"Thread 1 sleeping for: {rand}s, ({minutes}m)")
+                window_activate(rand)
+                count+=1
+                print(f"Thread 1: Keystrokes: {count}")
         
 def sub_splasher():
-   global count
-   print("Starting thread 2...")
-   while not quitProcess:
-       for i in range (1,11):
-            try:
-                window = win.getWindowsWithTitle('RuneLite')[0]
-            except PyGetWindowException:
-                print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
-                raise SystemExit
+    global count
+    print("Starting thread 2...")
+    while True:
+        while not quitProcess:
+            for i in range (1,11):
+                try:
+                    window = win.getWindowsWithTitle('RuneLite')[0]
+                    except PyGetWindowException:
+                    print("\nThread 2 could not fetch window.\nExiting thread 2.\n")
+                    raise SystemExit
                 
             rand = randrange(200,500)
             minutes = rand//60
@@ -167,4 +170,3 @@ def window_activate(rand):
         raise SystemExit
     
 main()
-
