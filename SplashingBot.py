@@ -17,7 +17,7 @@ color = (255, 183, 0)
 password = "password"
 press = Controller()
 count = 0
-timer = 50
+timer = 21700
 keys = ['a','b','c','d','e','1','2','3','4','5']
 quitProcess = False
 
@@ -170,5 +170,3 @@ def window_activate(rand):
         raise SystemExit
     
 main()
-
-
